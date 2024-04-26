@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Play Loud</title>
+  <link href="../css/popup.css" rel="stylesheet">
+</head>
+
+<body>
+
+<header class="header">
+  <div class="header__heading">
+    <div>
+      <img class="header__icon js-diagnostics__cog" src="../icon/icon-48.png" alt="Play Loud">
+      <h1 class="header__name">Play Loud</h1>
+    </div>
+    <div>
+      <div class="switch js-switch">
+        <input type="checkbox" class="switch__checkbox js-switch__checkbox" id="switch__checkbox">
+        <label class="switch__slider" for="switch__checkbox"></label>
+      </div>
+    </div>
+  </div>
+  <div class="header__description">
+    Use the slider below to control the volume of the current tab.
+    Switch to any tab playing audio with just one click.
+  </div>
+</header>
+
+<section class="diagnostics is-hidden js-diagnostics">
+  <strong>
+    Diagnostics
+  </strong>
+  <div class="diagnostics__description">
+    If you're experiencing any issues, please send the following diagnostics data via the
+    <a href="https://jharohit.com.np" target="_blank" class="link link--external">Support</a>.
+  </div>
+  <div class="diagnostics__data js-diagnostics__data"></div>
+  <div class="diagnostics__data-encoded js-diagnostics__data-encoded"></div>
+</section>
+
+<section class="outdated-browsers-manager is-hidden js-outdated-browsers-manager">
+  <div class="outdated-browsers-manager__title">
+    Compatibility Notice
+  </div>
+  <div class="outdated-browsers-manager__message">
+    Your browser version is outdated,
+    which prevents Play Loud from working properly.
+    The newest features and improvements require a more recent browser version to function correctly.
+
+    <br><br>
+
+    If updating your browser is not an option, please consider installing
+    <em class="outdated-browsers-manager__extension-name">Play Loud - outdated browsers edition</em>.
+
+    This edition is specifically designed for compatibility with older browsers.
+
+    <br><br>
+
+    <strong>
+      <a href="https://jharohit.com.np" target="_blank" class="link link--external">
+        Play Loud
+      </a>
+    </strong>
+  </div>
+</section>
+
+<section class="notification js-notification">
+  <button class="notification__close js-notification__close" tabindex="-1">×</button>
+  <div class="notification__title js-notification__title"></div>
+  <div class="notification__message js-notification__message"></div>
+</section>
+
+<section class="volume-slider">
+  <input class="volume-slider__slider js-volume-slider__slider" type="range" autofocus data-max-volume="600">
+</section>
+
+<section class="volume-info">
+  <span class="volume-info__volume-min">0 %</span>
+  <span class="volume-info__volume-current">
+    Volume:
+    <span class="volume-info__volume-current-value js-volume-info__volume-value"></span> %
+  </span>
+  <span class="volume-info__volume-max">
+    <span class="js-volume-info__volume-max"></span> %
+  </span>
+</section>
+
+<section class="c-analyser js-audio-analyser is-hidden">
+
+  <div class="c-analyser__pane js-audio-analyser__before-wrapper is-hidden">
+    <canvas class="c-analyser__canvas js-audio-analyser__before-canvas" height="40"></canvas>
+    <div class="c-analyser__freq-start">
+      0 Hz
+    </div>
+    <div class="c-analyser__freq-end">
+      <span class="js-audio-analyser__before-freq-end">22050</span>
+      Hz
+    </div>
+    <div class="c-analyser__description">
+      Signal before
+    </div>
+  </div>
+
+  <div class="c-analyser__pane js-audio-analyser__after-wrapper is-hidden">
+    <canvas class="c-analyser__canvas js-audio-analyser__after-canvas" height="40"></canvas>
+    <div class="c-analyser__freq-start">
+      0 Hz
+    </div>
+    <div class="c-analyser__freq-end">
+      <span class="js-audio-analyser__after-freq-end">22050</span>
+      Hz
+    </div>
+    <div class="c-analyser__description">
+      Frequency analyzer
+    </div>
+  </div>
+
+</section>
+
+<!-- Equalizer -->
+<section class="c-equalizer js-audio-equalizer">
+
+  <div class="c-equalizer__sliders is-hidden">
+
+      <!-- Equalizer - algorithm -->
+      <section style="width: 100%;">
+        <select class="js-audio-equalizer__algorithm" style="width: 100%;">
+          <option value="lowpass">Lowpass</option>
+          <option value="highpass">Highpass</option>
+          <option value="bandpass">Bandpass</option>
+          <option value="lowshelf">Lowshelf</option>
+          <option value="highshelf">Highshelf</option>
+          <option value="peaking">Peaking</option>
+          <option value="notch">Notch</option>
+          <option value="allpass">Allpass</option>
+        </select>
+      </section>
+
+      <!-- Equalizer - frequency -->
+      <section style="width: 100%; border: 1px solid #e0e0e0; margin-top: .25em; padding: .25em;">
+        <input class="js-audio-equalizer__frequency" style="width: 100%;" type="range" min="0" max="24000" value="440" step="10">
+        Frequency: <span class="js-audio-equalizer__frequency-value"></span> Hz
+      </section>
+
+      <!-- Equalizer - Q -->
+      <section style="width: 100%; border: 1px solid #e0e0e0; margin-top: .25em; padding: .25em;">
+        <input class="js-audio-equalizer__q" style="width: 100%;" type="range" min="0.1" max="20" value="1" step="0.1">
+        Q: <span class="js-audio-equalizer__q-value"></span>
+      </section>
+
+      <!-- Equalizer - gain -->
+      <section style="width: 100%; border: 1px solid #e0e0e0; margin-top: .25em; padding: .25em;">
+        <input class="js-audio-equalizer__gain" style="width: 100%;" type="range" min="-40" max="40" value="0" step="1">
+        Gain: <span class="js-audio-equalizer__gain-value"></span> dB
+      </section>
+
+  </div>
+
+  <div class="c-equalizer__presets">
+
+    <button class="c-equalizer__presets-button js-audio-equalizer__preset is-active" data-equalizer-type="default">
+      <i class="c-equalizer__button-icon icon-ccw"></i>
+      <span>
+      Default
+    </span>
+    </button>
+
+    <button class="c-equalizer__presets-button js-audio-equalizer__preset" data-equalizer-type="voice">
+      <i class="c-equalizer__presets-button-icon icon-mic"></i>
+      <span>
+      Voice boost
+    </span>
+    </button>
+
+    <button class="c-equalizer__presets-button js-audio-equalizer__preset" data-equalizer-type="bass">
+      <i class="c-equalizer__presets-button-icon icon-rocket"></i>
+      <span>
+      Bass boost
+    </span>
+    </button>
+
+  </div>
+
+</section>
+
+<section class="volume-actions">
+
+  <button class="volume-actions__button js-actions__reset is-hidden">
+    <i class="volume-actions__button-icon icon-reset"></i>
+    <span>
+      Reset to 100 % volume
+    </span>
+  </button>
+
+  <button class="volume-actions__button js-actions__restore is-hidden">
+    <i class="volume-actions__button-icon icon-history"></i>
+    <span>
+      Restore <span class="js-actions__restore-value"></span> % volume for <span class="js-actions__restore-domain"></span>
+    </span>
+  </button>
+
+</section>
+
+<section class="tabs">
+  <div class="tabs__title js-tabs__title"></div>
+  <div class="tabs__list js-tabs__list"></div>
+</section>
+
+<footer class="footer">
+
+  <!-- Review stars -->
+  <!-- <div class="stars js-stars">
+    <a class="stars__star-wrapper js-stars__star" target="_blank" data-action="support"></a>
+    <a class="stars__star-wrapper js-stars__star" target="_blank" data-action="support"></a>
+    <a class="stars__star-wrapper js-stars__star" target="_blank" data-action="review"></a>
+    <a class="stars__star-wrapper js-stars__star" target="_blank" data-action="review"></a>
+    <a class="stars__star-wrapper js-stars__star" target="_blank" data-action="review"></a>
+  </div> -->
+
+
+  <!-- Made by -->
+
+    Developed
+    <span class="footer__heart js-heart">♥</span>
+    BY
+    <a class="link link--external js-footer-link" tabindex="-1" target="_blank" href="https://jharohit.com.np">
+      BisKIRAN INFOTECH
+    </a>
+  </div>
+
+  <!-- Code activation -->
+  <div class="support is-hidden js-support">
+
+    <div class="support__description">
+      You can get additional volume boost by
+      <a class="link link--external" tabindex="-1" target="_blank" href="https://jharohit.com.np">Supporting BisKIRAN INFOTECH</a>.
+      After supporting it you'll get a code to activate 800 % volume boost.
+    </div>
+
+    <div class="support__code-wrapper">
+      <input type="text" class="support__code js-support__code" placeholder="Enter the code here…">
+      <button class="support__activate js-support__activate">Activate</button>
+    </div>
+
+    <div class="support__thankyou is-hidden js-support__thankyou">
+      Thank you for your support! ❤️
+      <br>
+      Please reopen Play Loud to see the changes.
+    </div>
+
+    <div class="support__invalid-code is-hidden js-support__invalid-code">
+      The code you entered is invalid. 🙈
+    </div>
+
+  </div>
+
+</footer>
+
+<script src="../js/popup.js"></script>
+
+<template class="js-template-tab">
+  <a href="#" class="tab js-tab">
+    <div class="tab__item tab__icon">
+      <img class="tab__icon-image js-tab__icon-image" src="" alt="">
+    </div>
+    <div class="tab__item tab__title js-tab__title"></div>
+  </a>
+</template>
+
+</body>
+</html>
